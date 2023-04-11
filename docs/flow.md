@@ -1,4 +1,5 @@
 - pesquisei a stack da colab
 - optei por usar o ant design, pois quero ver como me saio usando lib de UI (n costumo usar)
-
+- optei também pelo pnpm como package manager, embora nunca tenha usado
 - defini os requisitos iniciais da interface web
+- encontrei um bug instalando testing library via pnpm, bastou importar o "types" direto no tsconfig que funcionou
