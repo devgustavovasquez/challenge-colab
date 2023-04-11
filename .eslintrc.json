@@ -1,0 +1,4 @@
+{
+  "plugins": ["@typescript-eslint"],
+  "extends": ["next", "plugin:@typescript-eslint/recommended", "prettier"]
+}
