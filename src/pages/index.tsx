@@ -1,18 +1,21 @@
-import { Button, InputNumber, List } from "antd";
+import { Button, InputNumber, List, Spin } from "antd";
 import { useCallback, useEffect, useState } from "react";
 import { APIResponse } from "./interfaces";
 import Image from "next/image";
 
 export default function Home() {
   const [data, setData] = useState<APIResponse>();
+  const [isLoading, setIsLoading] = useState(false);
   const [offset, setOffset] = useState<number | null>(10);
 
   useEffect(() => {
     if (!offset) return setData(undefined);
+    setIsLoading(true);
 
     fetch(`https://randomuser.me/api/?results=${offset}`)
       .then((response) => response.json())
-      .then((data) => setData(data));
+      .then((data) => setData(data))
+      .finally(() => setIsLoading(false));
 
     return () => {
       setData(undefined);
@@ -20,11 +23,13 @@ export default function Home() {
   }, [offset]);
 
   const handleOffsetChange = useCallback((value: number | null) => {
-    setOffset(value);
+    if (!value) return setOffset(null);
+
+    setOffset(Math.floor(value));
   }, []);
 
   return (
-    <section className="h-full flex flex-col items-center justify-center max-w-5xl m-auto">
+    <section className="min-h-screen w-full max-w-5xl flex flex-col items-center mx-auto">
       <h1 className="text-4xl font-semibold text-center my-8 text-zinc-800">
         Lista de Usuários
       </h1>
@@ -35,8 +40,10 @@ export default function Home() {
         <InputNumber
           id="offset"
           onChange={handleOffsetChange}
-          defaultValue={10}
-          min={1}
+          type="number"
+          value={offset}
+          min={0}
+          max={100}
         />
       </div>
       {data && (
@@ -76,6 +83,11 @@ export default function Home() {
             </List.Item>
           )}
         />
+      )}
+      {isLoading && (
+        <div className="h-full w-full absolute top-0 left-0 flex items-center justify-center">
+          <Spin size="large" tip="Carregando..." />
+        </div>
       )}
     </section>
   );
