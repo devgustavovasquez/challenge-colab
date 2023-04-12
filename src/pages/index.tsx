@@ -1,4 +1,4 @@
-import { Button, List } from "antd";
+import { Button, InputNumber, List } from "antd";
 import { useEffect, useState } from "react";
 import { APIResponse } from "./interfaces";
 import Image from "next/image";
@@ -17,15 +17,29 @@ export default function Home() {
   }, []);
 
   return (
-    <>
+    <section className="flex flex-col items-center justify-center max-w-5xl m-auto">
+      <h1 className="text-4xl font-semibold text-center my-8 text-zinc-800">
+        Lista de Usuários
+      </h1>
+      <div className="flex items-center gap-2">
+        <label className="cursor-pointer py-2 px-1" htmlFor="users">
+          Quantidade de usuários:
+        </label>
+        <InputNumber defaultValue={10} id="users" />
+      </div>
       {data && (
         <List
-          className="my-20 mx-80"
+          className="w-full p-3"
           itemLayout="horizontal"
           dataSource={data.results}
           renderItem={(item) => (
             <List.Item
-              actions={[<Button key={`link-${item.id.value}`}>Opções</Button>]}
+              className="border-2 border-gray-200 rounded-lg p-4"
+              actions={[
+                <Button type="default" key={`link-${item.login.uuid}`}>
+                  Ver mais
+                </Button>,
+              ]}
             >
               <List.Item.Meta
                 avatar={
@@ -42,12 +56,16 @@ export default function Home() {
                     {item.name.first} {item.name.last}
                   </p>
                 }
-                description={item.email}
+                description={
+                  <p className="text-clip md:block flex-nowrap">
+                    {item.location.city}, {item.location.state}
+                  </p>
+                }
               />
             </List.Item>
           )}
         />
       )}
-    </>
+    </section>
   );
 }
