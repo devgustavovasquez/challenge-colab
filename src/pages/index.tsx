@@ -6,15 +6,18 @@ import Image from "next/image";
 export default function Home() {
   const [data, setData] = useState<APIResponse>();
   const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
   const [offset, setOffset] = useState<number | null>(10);
 
   useEffect(() => {
     if (!offset) return setData(undefined);
     setIsLoading(true);
+    setIsError(false);
 
     fetch(`https://randomuser.me/api/?results=${offset}`)
       .then((response) => response.json())
       .then((data) => setData(data))
+      .catch(() => setIsError(true))
       .finally(() => setIsLoading(false));
 
     return () => {
@@ -29,7 +32,7 @@ export default function Home() {
   }, []);
 
   return (
-    <section className="min-h-screen w-full max-w-5xl flex flex-col items-center mx-auto">
+    <section className="h-screen w-full max-w-5xl flex flex-col items-center mx-auto">
       <h1 className="text-4xl font-semibold text-center my-8 text-zinc-800">
         Lista de Usuários
       </h1>
@@ -43,7 +46,6 @@ export default function Home() {
           type="number"
           value={offset}
           min={0}
-          max={100}
         />
       </div>
       {data && (
@@ -75,7 +77,7 @@ export default function Home() {
                   </p>
                 }
                 description={
-                  <p className="text-clip md:block flex-nowrap">
+                  <p>
                     {item.location.city}, {item.location.state}
                   </p>
                 }
@@ -85,8 +87,16 @@ export default function Home() {
         />
       )}
       {isLoading && (
-        <div className="h-full w-full absolute top-0 left-0 flex items-center justify-center">
+        <div className="h-full w-full top-0 left-0 flex items-center justify-center">
           <Spin size="large" tip="Carregando..." />
+        </div>
+      )}
+
+      {isError && (
+        <div className="h-full w-full flex items-center justify-center">
+          <p className="text-2xl font-semibold text-center text-zinc-800">
+            Ocorreu um erro ao carregar os dados..
+          </p>
         </div>
       )}
     </section>
