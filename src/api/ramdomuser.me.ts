@@ -1,5 +1,8 @@
+import config from "@/config/env";
 import { UsersData } from "@/pages/interfaces";
 import { useEffect, useState } from "react";
+
+const API_URL = config.API.users.url();
 
 export function useFetchData(
   offset: number | null
@@ -19,9 +22,7 @@ export function useFetchData(
       setIsError(false);
 
       try {
-        const response = await fetch(
-          `https://randomuser.me/api/?results=${offset}`
-        );
+        const response = await fetch(API_URL + `?results=${offset}`);
         const data = await response.json();
         setData(data);
       } catch (error) {
