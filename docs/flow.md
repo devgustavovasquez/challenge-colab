@@ -3,3 +3,7 @@
 - optei também pelo pnpm como package manager, embora nunca tenha usado
 - defini os requisitos iniciais da interface web
 - encontrei um bug instalando testing library via pnpm, bastou importar o "types" direto no tsconfig que funcionou
+- usar o ant design é prático até demais, vou precisar fazer algumas coisas na mão para mostrar proficiência
+- grandes sacadas até agora:
+  - useCallback no offset handle para evitar que a função seja recriada a todo momento, fazendo com que o next memorize-a
+  - abstraindo toda a lógica de busca pelos dados em um hook separado da parte estrutural da app
