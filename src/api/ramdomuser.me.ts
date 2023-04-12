@@ -1,8 +1,8 @@
-import config from "@/config/env";
 import { UsersData } from "@/pages/interfaces";
+import getConfig from "next/config";
 import { useEffect, useState } from "react";
 
-const API_URL = config.API.users.url();
+const API_URL = getConfig().publicRuntimeConfig.API_USERS_URL;
 
 export function useFetchData(
   offset: number | null

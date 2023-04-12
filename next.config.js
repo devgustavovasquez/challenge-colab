@@ -4,7 +4,8 @@ const nextConfig = {
     domains: ["randomuser.me"],
   },
   reactStrictMode: true,
-  env: {
+  publicRuntimeConfig: {
+    staticFolder: "/static",
     API_USERS_URL: process.env.API_USERS_URL,
   },
 };

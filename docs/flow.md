@@ -7,3 +7,4 @@
 - grandes sacadas até agora:
   - useCallback no offset handle para evitar que a função seja recriada a todo momento, fazendo com que o next memorize-a
   - abstraindo toda a lógica de busca pelos dados em um hook separado da parte estrutural da app
+- dificuldade usando envs no next, mas lembrar dos conceitos de SSR esclareceu como resolver o problema
