@@ -1,29 +1,11 @@
 import { Button, InputNumber, List, Spin } from "antd";
-import { useCallback, useEffect, useState } from "react";
-import { APIResponse } from "./interfaces";
+import { useCallback, useState } from "react";
 import Image from "next/image";
+import { useFetchData } from "@/api/ramdomuser.me";
 
 export default function Home() {
-  const [data, setData] = useState<APIResponse>();
-  const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState(false);
   const [offset, setOffset] = useState<number | null>(10);
-
-  useEffect(() => {
-    if (!offset) return setData(undefined);
-    setIsLoading(true);
-    setIsError(false);
-
-    fetch(`https://randomuser.me/api/?results=${offset}`)
-      .then((response) => response.json())
-      .then((data) => setData(data))
-      .catch(() => setIsError(true))
-      .finally(() => setIsLoading(false));
-
-    return () => {
-      setData(undefined);
-    };
-  }, [offset]);
+  const [data, isLoading, isError] = useFetchData(offset);
 
   const handleOffsetChange = useCallback((value: number | null) => {
     if (!value) return setOffset(null);

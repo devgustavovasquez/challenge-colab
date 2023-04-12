@@ -1,8 +1,8 @@
-export interface APIResponse {
-  results: Result[];
+export interface UsersData {
+  results: UserData[];
 }
 
-interface Result {
+export interface UserData {
   gender: string;
   name: Name;
   location: Location;
