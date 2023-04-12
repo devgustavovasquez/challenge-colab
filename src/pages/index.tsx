@@ -1,5 +1,5 @@
 import { Button, InputNumber, List } from "antd";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { APIResponse } from "./interfaces";
 import Image from "next/image";
 
@@ -19,9 +19,9 @@ export default function Home() {
     };
   }, [offset]);
 
-  const handleOffsetChange = (value: number | null) => {
+  const handleOffsetChange = useCallback((value: number | null) => {
     setOffset(value);
-  };
+  }, []);
 
   return (
     <section className="h-full flex flex-col items-center justify-center max-w-5xl m-auto">
