@@ -1,21 +1,26 @@
-import { UsersData } from "@/pages/interfaces";
+import { UserData } from "@/pages/interfaces";
 import { Button, List } from "antd";
 import Image from "next/image";
 
 type Props = {
-  data: UsersData;
+  data: UserData[];
+  onUserClick: (id: string) => void;
 };
 
-export default function UsersList({ data }: Props) {
+export default function UsersList({ data, onUserClick }: Props) {
   return (
     <List
       className="w-full p-3"
       itemLayout="horizontal"
-      dataSource={data.results}
+      dataSource={data}
       renderItem={(item) => (
         <List.Item
           actions={[
-            <Button type="default" key={`link-${item.login.uuid}`}>
+            <Button
+              type="default"
+              key={`link-${item.login.uuid}`}
+              onClick={() => onUserClick(item.login.uuid)}
+            >
               Ver mais
             </Button>,
           ]}
