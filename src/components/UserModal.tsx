@@ -1,14 +1,16 @@
-import { UserData } from "@/pages/interfaces";
+import { useUserContext } from "@/context/UsersContext";
+import { UserData } from "@/types/interfaces";
 import { Button } from "antd";
 import Image from "next/image";
 
 type Props = {
   data: UserData;
   onClose: () => void;
-  onToggleUser: (id: string) => void;
 };
 
-export default function UserModal({ data, onClose, onToggleUser }: Props) {
+export default function UserModal({ data, onClose }: Props) {
+  const { toggleUser } = useUserContext();
+
   const handleGender = (value: string) => {
     if (value === "female") {
       return "🚺";
@@ -20,7 +22,7 @@ export default function UserModal({ data, onClose, onToggleUser }: Props) {
   };
 
   const handleToggleUser = (id: string) => {
-    onToggleUser(id);
+    toggleUser(id);
     onClose();
   };
 

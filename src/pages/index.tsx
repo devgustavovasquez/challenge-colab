@@ -1,28 +1,14 @@
 import { Spin } from "antd";
-import { useCallback, useEffect, useState } from "react";
-import { useFetchData } from "@/api/ramdomuser.me";
+import { useState } from "react";
 import OffsetControl from "@/components/OffsetControl";
 import UsersList from "@/components/UsersList";
 import UserModal from "@/components/UserModal";
-import { UserData } from "./interfaces";
+import { UserData } from "../types/interfaces";
+import { useUserContext } from "@/context/UsersContext";
 
 export default function Home() {
-  const [offset, setOffset] = useState<number | null>(10);
   const [modalData, setModalData] = useState<UserData | null>(null);
-  const [users, setUsers] = useState<UserData[]>([]);
-  const [data, isLoading, isError] = useFetchData(offset);
-
-  useEffect(() => {
-    if (!data) return;
-
-    setUsers((prevUsers) => [...prevUsers, ...data]);
-  }, [data]);
-
-  const handleOffsetChange = useCallback((value: number | null) => {
-    if (!value) return setOffset(null);
-
-    setOffset(Math.floor(value));
-  }, []);
+  const { users, isError, isLoading } = useUserContext();
 
   const handleUserClick = (id: string) => {
     if (!users) return;
@@ -34,25 +20,13 @@ export default function Home() {
     setModalData(user);
   };
 
-  const handleRemoveUser = (id: string) => {
-    if (!users) return;
-
-    const newUsers = users.filter((user) => user.login.uuid !== id);
-
-    setUsers(newUsers);
-  };
-
   return (
     <>
       <section className="h-screen w-full max-w-5xl flex flex-col items-center mx-auto">
         <h1 className="text-4xl font-semibold text-center my-8 text-zinc-800">
           Lista de Usuários
         </h1>
-        <OffsetControl
-          label="Quantidade de Usuários:"
-          value={offset}
-          onChange={handleOffsetChange}
-        />
+        <OffsetControl label="Quantidade de Usuários:" />
 
         {users && <UsersList data={users} onUserClick={handleUserClick} />}
 
@@ -71,11 +45,7 @@ export default function Home() {
         )}
       </section>
       {modalData && (
-        <UserModal
-          data={modalData}
-          onClose={() => setModalData(null)}
-          onToggleUser={handleRemoveUser}
-        />
+        <UserModal data={modalData} onClose={() => setModalData(null)} />
       )}
     </>
   );
