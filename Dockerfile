@@ -8,7 +8,7 @@
 #   docker run --env-file .env -dp <host-port>:<container-port> <image-name>
 
 # PRE-STAGE: Base 
-FROM node:18.15 AS base
+FROM node:18.15-alpine AS base
 
 # Install pnpm
 RUN npm install -g pnpm
