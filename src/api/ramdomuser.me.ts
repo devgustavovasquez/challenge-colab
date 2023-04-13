@@ -1,4 +1,4 @@
-import { UsersData } from "@/pages/interfaces";
+import { UserData } from "@/pages/interfaces";
 import getConfig from "next/config";
 import { useEffect, useState } from "react";
 
@@ -6,8 +6,8 @@ const API_URL = getConfig().publicRuntimeConfig.API_USERS_URL;
 
 export function useFetchData(
   offset: number | null
-): [UsersData | undefined, boolean, boolean] {
-  const [data, setData] = useState<UsersData>();
+): [UserData[] | undefined, boolean, boolean] {
+  const [data, setData] = useState<UserData[]>();
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
 
@@ -24,7 +24,8 @@ export function useFetchData(
       try {
         const response = await fetch(API_URL + `?results=${offset}`);
         const data = await response.json();
-        setData(data);
+        const { results } = data;
+        setData(results);
       } catch (error) {
         setIsError(true);
       } finally {
