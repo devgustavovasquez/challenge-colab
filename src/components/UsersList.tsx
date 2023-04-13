@@ -1,4 +1,4 @@
-import { UserData } from "@/pages/interfaces";
+import { UserData } from "@/types/interfaces";
 import { Button, List } from "antd";
 import Image from "next/image";
 
