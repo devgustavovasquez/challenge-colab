@@ -7,4 +7,6 @@
 - grandes sacadas até agora:
   - useCallback no offset handle para evitar que a função seja recriada a todo momento, fazendo com que o next memorize-a
   - abstraindo toda a lógica de busca pelos dados em um hook separado da parte estrutural da app
+  - abstraindo o states dos usuários para um context, facilitando e tomando controle da interação entre modal, home e offset
 - dificuldade usando envs no next, mas lembrar dos conceitos de SSR esclareceu como resolver o problema
+- a medida que o projeto foi avançando, o pensamento de "será que estou fazendo certo?" também foi avançando. normalmente é nessa etapa que procuro o senior do projeto ter uma segunda opinião, no caso desse projeto, consultei ao máximo que pude documentações/comunidade
