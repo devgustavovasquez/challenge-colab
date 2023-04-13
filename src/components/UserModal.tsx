@@ -33,6 +33,7 @@ export default function UserModal({ data, onClose }: Props) {
           type="default"
           className="absolute top-0 right-0 mt-4 mr-4"
           onClick={onClose}
+          aria-label="Close modal"
         >
           Fechar
         </Button>
@@ -42,7 +43,7 @@ export default function UserModal({ data, onClose }: Props) {
             src={data.picture.large}
             width={128}
             height={128}
-            alt="Picture of the author"
+            alt={`Picture of ${data.name.first} ${data.name.last}`}
           />
           <div>
             <p className="font-bold text-ellipsis">

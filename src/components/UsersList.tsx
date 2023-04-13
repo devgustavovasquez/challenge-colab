@@ -15,6 +15,7 @@ export default function UsersList({ data, onUserClick }: Props) {
       dataSource={data}
       renderItem={(item) => (
         <List.Item
+          key={item.login.uuid}
           actions={[
             <Button
               type="default"
@@ -32,7 +33,7 @@ export default function UsersList({ data, onUserClick }: Props) {
                 src={item.picture.large}
                 width={48}
                 height={48}
-                alt="Picture of the author"
+                alt={`Picture of ${item.name.first} ${item.name.last}`}
               />
             }
             title={
